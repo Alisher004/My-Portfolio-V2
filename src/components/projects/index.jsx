@@ -8,7 +8,7 @@ function Projects() {
   return (
     <section id="project" className="section projects">
       <div className="container">
-        <h2>Долбоорлор</h2>
+        <h2>Projects</h2>
         <div className="projects-grid">
           {projects.map((project) => (
             <div key={project.id} className="project-card">
@@ -17,11 +17,11 @@ function Projects() {
               <p>{project.desc}</p>
               <ul>
                 <li>
-                  Технологиялар: <strong>{project.tech}</strong>
+                Technologies: <strong>{project.tech}</strong>
                 </li>
               </ul>
               <a href={project.link} target="_blank" rel="noopener noreferrer" className="button">
-                Долбоорду көрүү
+              View Project
               </a>
             </div>
           ))}
@@ -36,11 +36,11 @@ function Projects() {
                 <p>{project.desc}</p>
                 <ul>
                   <li>
-                    Технологиялар: <strong>{project.tech}</strong>
+                  Technologies: <strong>{project.tech}</strong>
                   </li>
                 </ul>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="button">
-                  Долбоорду көрүү
+                View Project
                 </a>
               </div>
             ))}
@@ -48,7 +48,7 @@ function Projects() {
         )}
 
         <button onClick={() => setShowMore(!showMore)} className="toggle-button">
-          {showMore ? "Аз көрсөтүү" : "Көбүрөөк көрүү"}
+          {showMore ? "Show Less" : "More"}
         </button>
       </div>
     </section>

@@ -4,21 +4,12 @@ import "./About.css";
 function About() {
   return (
     <section id="about" className="about">
-      <h2>Мен жөнүндө</h2>
+      <h2>About me</h2>
       <div className="info-about container">
         <div className="block1">
           <p className="p">
-            Менин аты жонум <strong>Талипжанов Алишер Манасович</strong>. Мен
-            <strong>front end</strong> багытында веб-тиркемелерди иштеп
-            чыгуучумун. Мен үчүн веб-сайттарды жаратуу—чыгармачылык менен
-            технологияны айкалыштыруунун эң мыкты жолу. Менин максатым—бул
-            тармакта өзүмдү көрсөтүп,пайдалануучуга ыңгайлуу жана көркөм
-            веб-тиркемелерди түзүү жана оз тажрыйбамды чонойтуу. Менин 6 айлык
-            тажрыйбамда <strong>JavaScript, React, GitHub</strong> жана
-            <strong>TypeScript</strong> сыяктуу технологиялар менен иштедим. Код
-            жазуудан тышкары, мага креативдүү долбоорлорго катышуу, дизайн жасоо
-            жана жаңы технологияларды үйрөнүү жагат. Жеке жашоомдо гитара
-            черткенди жакшы кором.
+          Hello Im <b>Talipjanov Alisher Manasovich.</b> I am a front-end web developer. For me, creating websites is the best way to combine creativity with technology. My goal is to showcase myself in this field, create user-friendly and aesthetically pleasing web applications, and expand my experience. In my 6 months of experience, I have worked with technologies such as JavaScript, React, GitHub, and TypeScript. Besides coding, I enjoy participating in creative projects, designing, and learning new technologies. In my personal life, I love playing the guitar.
+
           </p>
         </div>
         <div className="block2">

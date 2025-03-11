@@ -4,6 +4,15 @@
   gap: 20px;
 }
 
+.section{
+  text-align: center;
+}
+
+.section h2{
+  margin-bottom: 40px;
+  font-size: 40px;
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
@@ -11,6 +20,7 @@
   height: 100%;
   box-shadow: 0 2px 4px #ccc;
   padding: 10px;
+  text-align: left;
 }
 
 .project-card img {
