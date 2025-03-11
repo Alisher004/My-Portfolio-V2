@@ -1,0 +1,115 @@
+.about {
+  padding: 5rem 0;
+  text-align: center;
+  animation: fadeIn 3s ease-in-out;
+}
+
+.info-about {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Эгерде экран кичирейсе, элементтер кайра туураланат */
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #00c6ff;
+}
+
+.about p {
+  text-align: left;
+  font-size: 1.1rem;
+  padding: 1.5rem;
+  line-height: 1.8;
+}
+
+.block1 {
+  width: 800px;
+}
+
+.block2 {
+  width: 300px;
+  height: 320px;
+}
+
+.block2 img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: all 0.9s;
+}
+
+.block2 img:hover {
+  box-shadow: 0 2px 4px #ccc;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Media Queries for responsive design */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+  .info-about {
+    flex-direction: column;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .block1 {
+    width: 100%;
+  }
+
+  .block2 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+  .about {
+    padding: 3rem 0;
+  }
+
+  .info-about {
+    align-items: center;
+    padding: 0 10px;
+    flex-direction: column-reverse;
+  }
+
+  .about h2 {
+    font-size: 1.8rem;
+  }
+
+  .about p {
+    font-size: 0.95rem;
+  }
+
+  .block1 {
+    width: 100%;
+  }
+
+  .block2 {
+    width: 180px;
+    height: 180px;
+  }
+}

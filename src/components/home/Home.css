@@ -1,0 +1,135 @@
+.home {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Элементтердин мобилдик түзмөктөрдө өзүнчө катарга өтүүсү үчүн */
+}
+
+.left-block {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+.left-block h1 {
+  font-size: 72px;
+  margin-bottom: -30px;
+  margin-top: 40px;
+}
+
+.left-block p {
+  color: rgb(115, 112, 112);
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.left-block strong {
+  font-size: 72px;
+  background: linear-gradient(to right, #a855f7, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.right-block {
+  width: 50%;
+  text-align: center;
+}
+
+.right-block img {
+  width: 60%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.right-block img:hover {
+  transform: scale(1.1) rotateZ(5deg);
+  cursor: pointer;
+}
+
+.home-buttons1 button {
+  background-color: #0f0c29;
+  color: white;
+  box-shadow: 0 1px 2px white;
+  padding: 10px 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.home-btn1 {
+  display: flex;
+  gap: 15px;
+}
+
+.home-btn1 button {
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(228, 211, 211);
+  background-color: #000000;
+}
+
+.home-btn {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.home-btn button:hover {
+  transform: scale(1.1);
+}
+
+/* Мобилдик түзмөктөр үчүн адаптация */
+@media (max-width: 768px) {
+  .home {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .left-block,
+  .right-block {
+    width: 100%; 
+    text-align: left; 
+  }
+
+  .left-block h1 {
+    font-size: 48px; 
+    margin: 30px 0 0 ;
+  }
+
+  .left-block strong {
+    font-size: 48px; /* Кичирейтүү */
+  }
+
+  .right-block img {
+    width: 80%; /* Сүрөттүн көлөмүн азайтуу */
+  }
+
+  .home-btn1 {
+    flex-direction: column; /* Кнопкалар вертикалдуу жайгашат */
+    gap: 20px;
+  }
+
+  .home-btn1 button {
+    width: 100%; /* Кнопкалар толугу менен туура келет */
+    font-size: 18px; /* Кичирээк экрандар үчүн текст өлчөмүн азайтуу */
+  }
+}
+
+/* Уюлдук телефон үчүн дагы бир адаптация */
+@media (max-width: 480px) {
+  .left-block h1 {
+    font-size: 36px; /* Хеддердин өлчөмүн кичирейтүү */
+  }
+
+  .left-block strong {
+    font-size: 36px; /* Кичирейтүү */
+  }
+
+  .right-block img {
+    width: 90%; /* Сүрөттү дагы кичирейтүү */
+  }
+
+  .home-btn1 button {
+    font-size: 16px; /* Кнопканын текст өлчөмү дагы кичирейтилди */
+  }
+}

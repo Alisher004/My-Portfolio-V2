@@ -1,0 +1,109 @@
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-shadow: 0 2px 4px #ccc;
+  padding: 10px;
+}
+
+.project-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.1);
+}
+
+.project-card h3 {
+  font-size: 1.8rem;
+  margin-top: 15px;
+}
+
+.project-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.project-card li {
+  text-align: left;
+  list-style: none;
+}
+
+.project-card .button {
+  margin-top: auto;
+  align-self: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background: #00c6ff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-right: auto;
+}
+
+.project-card .button:hover {
+  background: #0078d7;
+}
+
+.hidden {
+  display: none;
+}
+
+.toggle-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #00c6ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+  background: #0078d7;
+}
+
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Планшет үчүн адаптация */
+  }
+
+  .project-card {
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Жеңил контейнер */
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-grid {
+    grid-template-columns: 1fr; /* Мобилдик түзүлүштөрдө бир колонка */
+  }
+
+  .project-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .project-card p {
+    font-size: 0.9rem;
+  }
+
+  .toggle-button {
+    width: 100%; /* Кнопкалар толук тууралуу */
+  }
+}
