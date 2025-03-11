@@ -20,7 +20,7 @@
 
 .about p {
   text-align: left;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   padding: 1.5rem;
   line-height: 1.8;
 }
@@ -55,9 +55,6 @@
   }
 }
 
-/* Media Queries for responsive design */
-
-/* For tablets and smaller devices */
 @media (max-width: 768px) {
   .info-about {
     flex-direction: column;
@@ -84,7 +81,6 @@
   }
 }
 
-/* For mobile devices */
 @media (max-width: 480px) {
   .about {
     padding: 3rem 0;

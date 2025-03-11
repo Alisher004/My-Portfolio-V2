@@ -25,7 +25,7 @@ const Skills = () => {
   return (
     <section id="skills" className="section skills">
       <div className="container">
-        <h2 className="s">Менин көндүмдөрүм</h2>
+        <h2 className="s">My Skills</h2>
         <div className="skills-grid">
           {skillsData.map((skill, index) => (
             <div className="skill-card" key={index}>
