@@ -62,7 +62,11 @@ const ContactForm = () => {
           />
           <button type="submit">Send</button>
         </form>
-        {status && <p className="status-message">{status}</p>}
+        {status && (
+          <p className={`status-message ${status === "Билдирүү жөнөтүлдү!" ? "success" : "error"}`}>
+            {status}
+          </p>
+        )}
       </div>
 
       <div className="box2">

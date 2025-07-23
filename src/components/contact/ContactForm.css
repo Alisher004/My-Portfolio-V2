@@ -82,9 +82,12 @@
 
 .status-message {
   text-align: center;
-  color: #ff0000;
   margin-top: 10px;
+  font-weight: bold;
+  transition: color 0.3s;
 }
+.status-message.success { color: #4caf50; }
+.status-message.error { color: #ff0000; }
 
 @media (max-width: 768px) {
   .contact-form {

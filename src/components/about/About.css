@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap; /* Эгерде экран кичирейсе, элементтер кайра туураланат */
+  flex-wrap: wrap; 
 }
 
 .about h2 {
@@ -23,6 +23,7 @@
   font-size: 1.2rem;
   padding: 1.5rem;
   line-height: 1.8;
+  padding: 0;
 }
 
 .block1 {

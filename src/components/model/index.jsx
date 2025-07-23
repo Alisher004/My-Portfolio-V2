@@ -8,25 +8,25 @@ function Modal() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000); // 3 секундадан кийин жабылат
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className={`modal ${isVisible ? "" : "hidden"}`}>
+    <div className={`modal ${isVisible ? "modal-in" : "modal-out"}`}>
       <div className="modal-content">
         <div className="icons">
-          <FaCode size={"40"}/>
-          <FaUser size={"40"}/>
-          <FaCoffee size={"40"}/>
+          <FaCode size={40} />
+          <FaUser size={40} />
+          <FaCoffee size={40} />
         </div>
         <h1>
-          <span className="white-text">Welcome To My</span>
+          <span className="white-text fade-in delay-1">Welcome To My</span>
         </h1>
         <h1>
-          <span className="purple-text">Portfolio</span>
-          <span className="purple-light-text">Website</span>
+          <span className="purple-text fade-in delay-2">Portfolio </span>
+          <span className="purple-light-text fade-in delay-3">Website</span>
         </h1>
       </div>
     </div>
