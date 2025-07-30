@@ -9,6 +9,7 @@ function Projects() {
     <section id="project" className="section projects">
       <div className="container">
         <h2>Projects</h2>
+
         <div className="projects-grid">
           {projects.map((project) => (
             <div key={project.id} className="project-card">
@@ -17,11 +18,16 @@ function Projects() {
               <p>{project.desc}</p>
               <ul>
                 <li>
-                Technologies: <strong>{project.tech}</strong>
+                  Technologies: <strong>{project.tech}</strong>
                 </li>
               </ul>
-              <a href={project.link} target="_blank" rel="noopener noreferrer" className="button">
-              View Project
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button"
+              >
+                View Project
               </a>
             </div>
           ))}
@@ -36,20 +42,32 @@ function Projects() {
                 <p>{project.desc}</p>
                 <ul>
                   <li>
-                  Technologies: <strong>{project.tech}</strong>
+                    Technologies: <strong>{project.tech}</strong>
                   </li>
                 </ul>
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="button">
-                View Project
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button"
+                >
+                  View Project
                 </a>
               </div>
             ))}
           </div>
         )}
 
-        <button onClick={() => setShowMore(!showMore)} className="toggle-button">
-          {showMore ? "Show Less" : "More"}
-        </button>
+        {hiddenProjects.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={showMore}
+            onClick={() => setShowMore(!showMore)}
+            className="toggle-button"
+          >
+            {showMore ? "▲ Show Less" : "▼ More"}
+          </button>
+        )}
       </div>
     </section>
   );

@@ -11,20 +11,21 @@ function Header() {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: "smooth",});
     }
   };
 
   return (
-    <header className="header">
+    <header className="content">
       <div className="container">
-        <div className="content">
-          <h3 onClick={scrollToTop} className="title">
-            Алишер
-          </h3>
+        <div className="header">
+          <h1 onClick={scrollToTop} className="title">
+            ALI
+          </h1>
           <div className="info-content">
             <nav onClick={() => scrollToSection("about")}>about</nav>
             <nav onClick={() => scrollToSection("project")}>projects</nav>
+            <nav onClick={() => scrollToSection("resume")}>resume</nav> 
             <nav onClick={() => scrollToSection("contact")}>contact</nav>
           </div>
         </div>

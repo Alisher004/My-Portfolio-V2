@@ -1,13 +1,15 @@
 .home {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Элементтердин мобилдик түзмөктөрдө өзүнчө катарга өтүүсү үчүн */
+  flex-wrap: wrap;
+  margin-top: 50px;
 }
 
 .left-block {
   width: 50%;
   margin: 0;
   padding: 0;
+  animation: name 5s;
 }
 
 .left-block h1 {
@@ -32,11 +34,12 @@
 
 .right-block {
   width: 50%;
-  text-align: center;
+  text-align: right;
+  animation: name2 5s;
 }
 
 .right-block img {
-  width: 60%;
+  width: 80%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -87,17 +90,21 @@
 
   .left-block,
   .right-block {
-    width: 100%; 
-    text-align: left; 
+    width: 100%;
+    text-align: left;
   }
 
   .left-block h1 {
-    font-size: 48px; 
-    margin: 30px 0 0 ;
+    font-size: 48px;
+    margin: 30px 0 0;
   }
 
   .left-block strong {
     font-size: 48px; /* Кичирейтүү */
+  }
+
+  .right-block {
+    text-align: center;
   }
 
   .right-block img {
@@ -131,5 +138,35 @@
 
   .home-btn1 button {
     font-size: 16px; /* Кнопканын текст өлчөмү дагы кичирейтилди */
+  }
+}
+
+@keyframes name {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  50%{
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes name2 {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  50%{
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

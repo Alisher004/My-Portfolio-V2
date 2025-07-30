@@ -1,14 +1,16 @@
 .content {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
   position: fixed;
   top: 0; 
   left: 0;
   right: 0;
   z-index: 1000; 
-  padding: 10px; 
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 
@@ -17,14 +19,11 @@
   align-items: center;
   font-size: 22px;
   gap: 40px;
-  background: linear-gradient(to right, #a855f7, #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   background: linear-gradient(to right, #a855f7, #6366f1);
   -webkit-background-clip: text;
