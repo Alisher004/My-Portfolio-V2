@@ -1,6 +1,6 @@
 import React from 'react'
 import Homecom from '../components/home'
-// import Modal from '../components/model'
+import Modal from '../components/model'
 import About from '../components/about'
 import Projects from '../components/projects'
 import Skills from '../components/skills'
@@ -12,7 +12,7 @@ function Home() {
   
   return (
     <div>
-      {/* <Modal /> */}
+      <Modal />
       <Homecom />
       <About />
       <Projects />

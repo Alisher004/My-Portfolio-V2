@@ -61,6 +61,9 @@
   #language-selector {
     padding: 8px 16px; 
   }
+  .header{
+    padding: 10px 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -75,5 +78,57 @@
 
   .title {
     font-size: 16px; 
+  }
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 21px;
+  cursor: pointer;
+}
+
+.menu-icon .bar {
+  height: 3px;
+  background-color: white;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Анимация үчүн */
+.menu-icon.open .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-icon.open .bar:nth-child(2) {
+  opacity: 0;
+}
+.menu-icon.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Мобилдик версия үчүн */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+  }
+
+  .info-content {
+    display: none;
+    flex-direction: column;
+    background-color: #0f0c29;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    width: 100%;
+  }
+
+  .info-content.show {
+    display: flex;
+    gap: 15px;
   }
 }

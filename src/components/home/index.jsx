@@ -10,6 +10,7 @@ function Homecom() {
   };
   return (
     <div className="home container">
+      <div>
       <div className="left-block">
         <h1>Frontend</h1>
         <strong>Developer</strong>
@@ -37,6 +38,7 @@ function Homecom() {
             </a>
           </div>
         </div>
+      </div>
       </div>
       <div className="right-block">
         <img src="/Coding.gif" alt="Coding Animation" />
