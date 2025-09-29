@@ -18,7 +18,7 @@ function Layout() {
 
   return (
     <div>
-      {showHeader && <div className="reveal" style={{"--i": 0}}><Header /></div>}
+      {showHeader && <Header />}
       <Outlet />
       {showFooter && <Footer />}
     </div>
