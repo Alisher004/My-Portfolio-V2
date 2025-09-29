@@ -23,7 +23,7 @@
   font-weight: 700;
   position: relative;
   display: inline-block;
-  animation: titleShimmer 2.8s linear infinite;
+  animation: titleShimmer 5s linear infinite;
   background-size: 200% auto;
 }
 
