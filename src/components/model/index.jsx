@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Modal.css";
 import { FaCode, FaUser, FaCoffee } from "react-icons/fa";
 
-function Modal() {
+function Modal({ onClose }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -12,6 +12,16 @@ function Modal() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isVisible) return;
+    const outTimer = setTimeout(() => {
+      if (typeof onClose === "function") {
+        onClose();
+      }
+    }, 500); // match .modal-out duration
+    return () => clearTimeout(outTimer);
+  }, [isVisible, onClose]);
 
   return (
     <div className={`modal ${isVisible ? "modal-in" : "modal-out"}`}>

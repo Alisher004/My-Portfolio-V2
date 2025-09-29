@@ -68,11 +68,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10000;
+}
+
+.modal-in .modal-content {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  animation: modalContentIn 220ms ease-out forwards;
+}
+
+@keyframes modalContentIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .modal-content {
@@ -86,6 +100,34 @@
   height: auto;
   object-fit: contain;
   border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 150ms ease, transform 120ms ease;
+}
+
+.modal-close:hover {
+  background: rgba(99, 102, 241, 0.85);
+}
+
+.modal-close:active {
+  transform: scale(0.96);
 }
 
 /* Мобилдик адаптация */
@@ -104,22 +146,22 @@
   }
 
   .hover-content {
-    font-size: 16px; /* Мобилдик түзүлүш үчүн текстти кичирейтүү */
+    font-size: 16px;
   }
 
   .hover-content i {
-    font-size: 30px; /* Иконка үчүн өлчөмдү кичирейтүү */
+    font-size: 30px;
   }
 }
 
 @media (max-width: 480px) {
   .image-wrapper {
-    border-radius: 5px; /* Мобилдик түзүлүш үчүн бурчту кыскартуу */
+    border-radius: 5px;
   }
 
   .modal-content {
     max-width: 95%;
-    max-height: 80vh; /* Мобилдик түзүлүштөрдө контейнердин өлчөмүн кичирейтүү */
+    max-height: 80vh;
   }
 
   .modal-image {

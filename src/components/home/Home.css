@@ -3,13 +3,27 @@
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 50px;
+  position: relative;
+}
+
+/* Ambient gradient glow */
+.home::before {
+  content: "";
+  position: absolute;
+  inset: -80px -40px auto -40px;
+  height: 340px;
+  background: radial-gradient(600px 200px at 10% 20%, rgba(99,102,241,0.25), transparent 60%),
+              radial-gradient(400px 160px at 40% 10%, rgba(168,85,247,0.18), transparent 60%),
+              radial-gradient(500px 220px at 70% 0%, rgba(14,165,233,0.14), transparent 60%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .left-block {
   width: 50%;
   margin: 0;
   padding: 0;
-  animation: name 5s;
 }
 
 .left-block h1 {
@@ -32,10 +46,30 @@
   font-weight: 700;
 }
 
+/* Staggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  animation: revealIn 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 120ms + 120ms);
+}
+
+@keyframes revealIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 .right-block {
   width: 50%;
   text-align: right;
-  animation: name2 5s;
 }
 
 .right-block img {
@@ -44,8 +78,27 @@
   transition: transform 0.3s ease;
 }
 
+.hero-image {
+  opacity: 0;
+  transform: translateX(24px) translateY(8px) scale(0.96) rotateZ(2deg);
+  animation: heroIn 800ms cubic-bezier(0.22, 1, 0.36, 1) 260ms forwards;
+}
+
+@keyframes heroIn {
+  0% {
+    opacity: 0;
+    transform: translateX(24px) translateY(8px) scale(0.96) rotateZ(2deg);
+    filter: saturate(0.8) blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1) rotateZ(0);
+    filter: saturate(1) blur(0);
+  }
+}
+
 .right-block img:hover {
-  transform: scale(1.1) rotateZ(5deg);
+  transform: scale(1.06) rotateZ(2deg);
   cursor: pointer;
 }
 
@@ -100,7 +153,7 @@
   }
 
   .left-block strong {
-    font-size: 48px; /* Кичирейтүү */
+    font-size: 48px; 
   }
 
   .right-block {
@@ -108,65 +161,46 @@
   }
 
   .right-block img {
-    width: 80%; /* Сүрөттүн көлөмүн азайтуу */
+    width: 80%; 
   }
 
   .home-btn1 {
-    flex-direction: column; /* Кнопкалар вертикалдуу жайгашат */
+    flex-direction: column; 
     gap: 20px;
   }
 
   .home-btn1 button {
-    width: 100%; /* Кнопкалар толугу менен туура келет */
-    font-size: 18px; /* Кичирээк экрандар үчүн текст өлчөмүн азайтуу */
+    width: 100%; 
+    font-size: 18px; 
   }
 }
 
 /* Уюлдук телефон үчүн дагы бир адаптация */
 @media (max-width: 480px) {
   .left-block h1 {
-    font-size: 36px; /* Хеддердин өлчөмүн кичирейтүү */
+    font-size: 36px; 
   }
 
   .left-block strong {
-    font-size: 36px; /* Кичирейтүү */
+    font-size: 36px; 
   }
 
   .right-block img {
-    width: 90%; /* Сүрөттү дагы кичирейтүү */
+    width: 90%; 
   }
 
   .home-btn1 button {
-    font-size: 16px; /* Кнопканын текст өлчөмү дагы кичирейтилди */
+    font-size: 16px; 
   }
 }
 
-@keyframes name {
-  0% {
-    opacity: 0;
-    transform: translateX(-200px);
-  }
-  50%{
-    opacity: 0;
-    transform: translateX(-200px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes name2 {
-  0% {
-    opacity: 0;
-    transform: translateX(200px);
-  }
-  50%{
-    opacity: 0;
-    transform: translateX(200px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-image {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
