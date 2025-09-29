@@ -20,3 +20,8 @@ body {
     background-position: 6% 6%, 94% 8%, 8% 94%, 92% 90%, center;
   }
 }
+
+html, body, #root {
+  min-height: 100%;
+  background-color: #12012b;
+}
