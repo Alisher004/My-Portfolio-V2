@@ -1,4 +1,22 @@
-:root {
-  color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(145deg, #150133, #13012c);
+body {
+  background-color: #12012b;
+  background:
+    radial-gradient(60vmax 60vmax at 0% 0%, rgba(168, 85, 247, 0.18), transparent 65%),
+    radial-gradient(70vmax 70vmax at 100% 0%, rgba(99, 102, 241, 0.16), transparent 65%),
+    radial-gradient(70vmax 70vmax at 0% 100%, rgba(14, 165, 233, 0.14), transparent 65%),
+    radial-gradient(60vmax 60vmax at 100% 100%, rgba(236, 72, 153, 0.14), transparent 65%),
+    linear-gradient(145deg, #150133 0%, #13012c 100%);
+  background-repeat: no-repeat;
+  background-size: auto, auto, auto, auto, cover;
+  background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, center;
+  animation: bgMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+  0% {
+    background-position: 2% 2%, 98% 4%, 4% 98%, 96% 96%, center;
+  }
+  100% {
+    background-position: 6% 6%, 94% 8%, 8% 94%, 92% 90%, center;
+  }
 }

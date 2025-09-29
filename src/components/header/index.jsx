@@ -3,6 +3,16 @@ import "./Header.css";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,7 +32,7 @@ function Header() {
   };
 
   return (
-    <header className="content">
+    <header className={`content ${scrolled ? "scrolled" : ""}`}>
       <div className="container">
         <div className="header">
           <h1 onClick={scrollToTop} className="title">ALI</h1>
