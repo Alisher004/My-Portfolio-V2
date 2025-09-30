@@ -113,8 +113,14 @@
   list-style: none;
 }
 
-.project-card .button {
+/* buttons */
+.button-row {
+  display: flex;
+  gap: 10px;
   margin-top: auto;
+}
+
+.project-card .button {
   align-self: center;
   padding: 10px 20px;
   font-size: 1rem;
@@ -123,7 +129,6 @@
   border-radius: 10px;
   text-decoration: none;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-  margin-right: auto;
   box-shadow: 0 8px 20px rgba(0, 198, 255, 0.25);
 }
 
@@ -133,13 +138,25 @@
   box-shadow: 0 12px 28px rgba(124, 58, 237, 0.28);
 }
 
+.project-card .button.secondary {
+  background: transparent;
+  border: 1px solid rgba(124, 58, 237, 0.6);
+  box-shadow: none;
+}
+
 .hidden {
   display: none;
 }
 
+/* spacing so extra grid does not collide with first */
+.projects + .projects .projects-grid,
+.projects .projects-grid + .projects-grid {
+  margin-top: 24px;
+}
+
 .toggle-button {
   display: block;
-  margin: 20px auto;
+  margin: 20px auto 0;
   padding: 10px 20px;
   font-size: 1rem;
   background: #00c6ff;
@@ -162,6 +179,10 @@
   .project-card {
     padding: 10px;
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .button-row {
+    flex-direction: column;
   }
 }
 
