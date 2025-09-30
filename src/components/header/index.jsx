@@ -35,7 +35,7 @@ function Header() {
     <header className={`content ${scrolled ? "scrolled" : ""}`}>
       <div className="container">
         <div className="header">
-          <h1 onClick={scrollToTop} className="title">ALI</h1>
+          <h1 onClick={scrollToTop} className="title">ALISHER</h1>
 
           <div className={`menu-icon ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
             <div className="bar"></div>

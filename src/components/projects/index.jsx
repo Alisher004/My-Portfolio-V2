@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Project.css";
 import { projects, hiddenProjects } from "../../data/Projects"; 
+import { Link } from "react-router-dom";
 
 function Projects() {
   const [showMore, setShowMore] = useState(false);
@@ -11,6 +12,8 @@ function Projects() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
         }
       });
     }, { threshold: 0.15 });
@@ -68,14 +71,19 @@ function Projects() {
                   Technologies: <strong>{project.tech}</strong>
                 </li>
               </ul>
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button"
-              >
-                View Project
-              </a>
+              <div className="button-row">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button"
+                >
+                  View Project
+                </a>
+                <Link to={`/projects/${project.id}`} className="button secondary">
+                  Details
+                </Link>
+              </div>
             </div>
           ))}
         </div>
@@ -100,14 +108,19 @@ function Projects() {
                     Technologies: <strong>{project.tech}</strong>
                   </li>
                 </ul>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="button"
-                >
-                  View Project
-                </a>
+                <div className="button-row">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button"
+                  >
+                    View Project
+                  </a>
+                  <Link to={`/projects/${project.id}`} className="button secondary">
+                    Details
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
