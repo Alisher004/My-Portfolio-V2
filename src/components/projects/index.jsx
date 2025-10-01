@@ -7,45 +7,20 @@ function Projects() {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    const cards = document.querySelectorAll('.project-card');
-    const io = new IntersectionObserver((entries) => {
+    const elements = document.querySelectorAll('.slide-in-left, .slide-in-right');
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
+          entry.target.classList.add('is-visible');
         } else {
-          entry.target.classList.remove('in-view');
+          entry.target.classList.remove('is-visible');
         }
       });
     }, { threshold: 0.15 });
-    cards.forEach((c) => io.observe(c));
-    return () => io.disconnect();
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, [showMore]);
-
-  const onCardMove = (e) => {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    const rotateY = dx * 10; // left/right
-    const rotateX = -dy * 10; // up/down
-    el.style.setProperty('--rx', rotateX.toFixed(2) + 'deg');
-    el.style.setProperty('--ry', rotateY.toFixed(2) + 'deg');
-    // Shine position
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    el.style.setProperty('--mx', mx + 'px');
-    el.style.setProperty('--my', my + 'px');
-  };
-
-  const onCardLeave = (e) => {
-    const el = e.currentTarget;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
-    el.style.removeProperty('--mx');
-    el.style.removeProperty('--my');
-  };
 
   return (
     <section id="project" className="section projects">
@@ -56,10 +31,8 @@ function Projects() {
           {projects.map((project, idx) => (
             <div
               key={project.id}
-              className="project-card"
-              style={{"--stagger": `${idx * 90}ms`}}
-              onMouseMove={onCardMove}
-              onMouseLeave={onCardLeave}
+              className={`project-card ${idx % 2 === 0 ? 'slide-in-left' : 'slide-in-right'}`}
+              style={{"--d": `${idx * 120}ms`}}
             >
               <div className="project-media">
                 <img src={project.img} alt={project.title} className="project-img" />
@@ -93,10 +66,8 @@ function Projects() {
             {hiddenProjects.map((project, idx) => (
               <div
                 key={project.id}
-                className="project-card"
-                style={{"--stagger": `${idx * 90}ms`}}
-                onMouseMove={onCardMove}
-                onMouseLeave={onCardLeave}
+                className={`project-card ${(projects.length + idx) % 2 === 0 ? 'slide-in-left' : 'slide-in-right'}`}
+                style={{"--d": `${(projects.length + idx) * 120}ms`}}
               >
                 <div className="project-media">
                   <img src={project.img} alt={project.title} className="project-img" />

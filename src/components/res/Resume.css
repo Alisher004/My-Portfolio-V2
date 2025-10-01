@@ -1,0 +1,224 @@
+.resume-section {
+    padding: 100px 0;
+    text-align: center;
+    min-height: 100vh;
+  }
+  
+  .resume-title {
+    font-size: 3rem;
+    margin-bottom: 50px;
+    background: linear-gradient(to right, #a855f7, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    animation: titleShimmer 5s linear infinite;
+    background-size: 200% auto;
+  }
+  
+  @keyframes titleShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  
+  .resume-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .resume-card {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 2px 4px #0006;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* gradient border via pseudo */
+  .resume-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: 16px;
+    background: linear-gradient(120deg, rgba(99,102,241,0.6), rgba(168,85,247,0.6));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  
+  /* Enhanced slide-in animations with blur/scale */
+  .slide-in-left,
+  .slide-in-right {
+    opacity: 0;
+    will-change: transform, opacity, filter;
+    filter: blur(6px);
+    transform: translateY(10px);
+  }
+  
+  .slide-in-left {
+    transform: translateX(-48px) translateY(10px) scale(0.98);
+  }
+  
+  .slide-in-right {
+    transform: translateX(48px) translateY(10px) scale(0.98);
+  }
+  
+  .slide-in-left.is-visible,
+  .slide-in-right.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) translateY(0) scale(1);
+    transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), opacity 680ms ease, filter 680ms ease;
+    transition-delay: var(--d, 0ms);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .slide-in-left,
+    .slide-in-right,
+    .slide-in-left.is-visible,
+    .slide-in-right.is-visible {
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
+  }
+  
+  .resume-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 2px 8px #0002;
+    z-index: 2;
+  }
+  
+  .resume-card h3 {
+    color: #a855f7;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .resume-item {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .resume-item strong {
+    color: #6366f1;
+  }
+  
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .skill-tag {
+    background: linear-gradient(90deg, #00c6ff, #7c3aed);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+  }
+  
+  .skill-tag:hover {
+    transform: translateY(-2px);
+  }
+  
+  .experience-item h4 {
+    color: #6366f1;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .experience-item p {
+    color: #fff;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .interests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .interest-item {
+    color: #fff;
+    font-size: 1rem;
+    padding: 8px 0;
+    transition: transform 0.2s ease;
+  }
+  
+  .interest-item:hover {
+    transform: translateX(10px);
+    color: #a855f7;
+  }
+  
+  .education-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid #6366f1;
+  }
+  
+  .education-item h4 {
+    color: #a855f7;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .education-item p {
+    color: #fff;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .languages-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .language-item {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+  }
+  
+  .language-item:hover {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .resume-title {
+      font-size: 2rem;
+    }
+    
+    .resume-content {
+      grid-template-columns: 1fr;
+      padding: 0 15px;
+    }
+    
+    .resume-card {
+      padding: 20px;
+    }
+  }

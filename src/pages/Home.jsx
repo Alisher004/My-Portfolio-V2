@@ -27,8 +27,8 @@ function Home() {
           <Projects />
           <Skills />
           <PictureModal />
-          <ContactForm />
           <Resume />
+          <ContactForm />
         </>
       )}
     </div>
