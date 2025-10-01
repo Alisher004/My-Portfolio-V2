@@ -33,7 +33,7 @@ function Header() {
 
   return (
     <header className={`content ${scrolled ? "scrolled" : ""}`}>
-      <div className="container">
+      <div className="container ">
         <div className="header">
           <h1 onClick={scrollToTop} className="title">ALISHER</h1>
 
