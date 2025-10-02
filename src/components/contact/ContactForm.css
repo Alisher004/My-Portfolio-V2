@@ -124,9 +124,12 @@
   border-radius: 12px;
   background: rgba(27, 23, 56, 0.8);
   color: #fff;
-  font-size: clamp(14px, 2vw, 16px);
+  font-size: 16px; /* Minimum 16px to prevent iOS zoom */
   transition: all 0.3s ease;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .contact-form input:focus,
@@ -135,6 +138,7 @@
   border-color: #6366f1;
   background: rgba(27, 23, 56, 1);
   transform: translateY(-2px);
+  -webkit-transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
 }
 
@@ -142,6 +146,7 @@
   height: 120px;
   resize: vertical;
   font-family: inherit;
+  font-size: 16px; /* Ensure textarea also has 16px minimum */
 }
 
 .submit-btn {
@@ -150,7 +155,7 @@
   border: none;
   padding: 15px 30px;
   border-radius: 12px;
-  font-size: clamp(14px, 2vw, 16px);
+  font-size: 16px; /* Ensure button text is also 16px minimum */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -159,6 +164,9 @@
   justify-content: center;
   gap: 10px;
   box-shadow: 0 8px 20px rgba(0, 198, 255, 0.25);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .submit-btn:hover {
@@ -338,10 +346,12 @@
   .contact-form input,
   .contact-form textarea {
     padding: 12px 15px;
+    font-size: 16px; /* Keep 16px minimum on mobile */
   }
   
   .submit-btn {
     padding: 12px 25px;
+    font-size: 16px; /* Keep 16px minimum on mobile */
   }
 }
 
@@ -358,5 +368,6 @@
   .contact-form input,
   .contact-form textarea {
     padding: 10px 12px;
+    font-size: 16px; /* Keep 16px minimum on very small screens */
   }
 }
