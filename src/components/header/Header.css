@@ -7,6 +7,7 @@
   background: transparent;
   width: 100%;
   max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .header{
@@ -17,8 +18,13 @@
   gap: 10px;
   opacity: 0;
   transform: translateY(-12px);
+  -webkit-transform: translateY(-12px);
   animation: headerEnter 600ms ease-out forwards;
+  -webkit-animation: headerEnter 600ms ease-out forwards;
   padding: 10px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 
@@ -34,10 +40,16 @@
   font-size: 30px;
   font-weight: 700;
   background: linear-gradient(to right, #a855f7, #6366f1);
+  background: -webkit-linear-gradient(to right, #a855f7, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   width: 150px;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -45,6 +57,7 @@
   .content {
     align-items: center; 
     gap: 15px;
+    overflow-x: hidden;
   }
 
   .info-content {
@@ -55,15 +68,18 @@
   .title {
     font-size: 18px; 
     width: auto; 
+    max-width: calc(100vw - 200px);
   }
   .header{
     padding: 10px 0;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .content {
     gap: 10px; 
+    overflow-x: hidden;
   }
 
   .menu-icon {
@@ -71,6 +87,7 @@
     z-index: 1002;
     width: 28px;
     height: 21px;
+    flex-shrink: 0;
   }
 
   .info-content {
@@ -88,12 +105,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 1;
   }
 
   .header {
     padding: 10px 15px;
     justify-content: space-between;
     align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -106,6 +126,7 @@
   cursor: pointer;
   z-index: 1002;
   position: relative;
+  flex-shrink: 0;
 }
 
 .menu-icon .bar {
@@ -114,17 +135,20 @@
   background-color: white;
   border-radius: 4px;
   transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 /* Анимация үчүн */
 .menu-icon.open .bar:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
+  -webkit-transform: rotate(45deg) translate(5px, 5px);
 }
 .menu-icon.open .bar:nth-child(2) {
   opacity: 0;
 }
 .menu-icon.open .bar:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
+  -webkit-transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Мобилдик версия үчүн */
@@ -145,20 +169,26 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     flex-direction: column;
     width: 100%;
+    max-width: 100vw;
     height: 300px;
     z-index: 1009;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .info-content.show {
     display: flex !important;
     gap: 15px;
     animation: slideDown 0.3s ease-out;
+    -webkit-animation: slideDown 0.3s ease-out;
   }
 
   .info-content nav {
     padding: 10px 0;
     color: white;
     transition: color 0.2s ease;
+    -webkit-transition: color 0.2s ease;
+    white-space: nowrap;
   }
 
   .info-content nav:hover {
@@ -170,6 +200,7 @@
     position: relative;
     justify-content: space-between;
     align-items: center;
+    max-width: 100%;
   }
 }
 
@@ -177,10 +208,23 @@
   from {
     opacity: 0;
     transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes slideDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
   }
 }
 
@@ -209,16 +253,30 @@
   0% {
     opacity: 0;
     transform: translateY(-12px);
+    -webkit-transform: translateY(-12px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes headerEnter {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
   }
 }
 
 .info-content nav {
   position: relative;
   transition: color 200ms ease;
+  -webkit-transition: color 200ms ease;
 }
 
 .info-content nav::after {
@@ -229,7 +287,9 @@
   width: 0;
   height: 2px;
   background: linear-gradient(to right, #a855f7, #6366f1);
+  background: -webkit-linear-gradient(to right, #a855f7, #6366f1);
   transition: width 220ms ease;
+  -webkit-transition: width 220ms ease;
 }
 
 .info-content nav:hover {

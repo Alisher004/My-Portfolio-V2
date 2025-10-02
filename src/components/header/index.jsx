@@ -1,39 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import "./Header.css";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const ticking = useRef(false);
+
+  // Throttled scroll handler for better performance
+  const handleScroll = useCallback(() => {
+    if (!ticking.current) {
+      requestAnimationFrame(() => {
+        const shouldBeScrolled = window.scrollY > 8;
+        if (shouldBeScrolled !== scrolled) {
+          setScrolled(shouldBeScrolled);
+        }
+        ticking.current = false;
+      });
+      ticking.current = true;
+    }
+  }, [scrolled]);
 
   React.useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 8);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener with passive flag for better performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ 
+      top: 0, 
+      behavior: "smooth" 
+    });
+    setMenuOpen(false);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setMenuOpen(false);
-  };
-
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = useCallback((sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-      setMenuOpen(false); // Меню жабылат
+      const headerHeight = 80; // Account for fixed header
+      const targetPosition = section.offsetTop - headerHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+      });
+      setMenuOpen(false);
     }
-  };
+  }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = useCallback(() => {
+    setMenuOpen(prev => !prev);
+  }, []);
 
   return (
     <header className={`content ${scrolled ? "scrolled" : ""}`}>
-      <div className="container ">
+      <div className="container">
         <div className="header">
           <h1 onClick={scrollToTop} className="title">ALISHER</h1>
 
@@ -45,6 +70,7 @@ function Header() {
           <div className={`info-content ${menuOpen ? "show" : ""}`}>
             <nav onClick={() => scrollToSection("about")}>about</nav>
             <nav onClick={() => scrollToSection("project")}>projects</nav>
+            <nav onClick={() => scrollToSection("skills")}>skills</nav>
             <nav onClick={() => scrollToSection("resume")}>resume</nav>
             <nav onClick={() => scrollToSection("contact")}>contact</nav>
           </div>
