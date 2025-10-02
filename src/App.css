@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   --tw-bg-opacity: 11;
@@ -11,10 +15,26 @@ body {
   line-height: 1.6;
   font-size: 1rem;
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 .container {
   width: 90%;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 0 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 0 10px;
+  }
 }

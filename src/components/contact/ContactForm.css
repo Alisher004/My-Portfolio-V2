@@ -1,7 +1,6 @@
 .contact-section {
   padding: clamp(4rem, 8vw, 6rem) 0;
   text-align: center;
-  min-height: 100vh;
 }
 
 .contact-title {
@@ -200,13 +199,13 @@
   min-width: 24px;
 }
 
-.info-content h4 {
+.info-content2 h4 {
   color: #a855f7;
   margin: 0 0 5px 0;
   font-size: clamp(1rem, 2vw, 1.1rem);
 }
 
-.info-content p {
+.info-content2 p {
   color: #fff;
   margin: 0;
   font-size: clamp(0.85rem, 1.8vw, 0.9rem);
