@@ -10,14 +10,13 @@ function Homecom() {
   };
   return (
     <div className="home container">
-      <div>
       <div className="left-block">
         <h1 className="reveal" style={{"--i": 0}}>Frontend</h1>
-        <strong className="reveal" style={{"--i": 1}}>Developer</strong>
-        <p className="reveal" style={{"--i": 2}}>
+        <strong className="reveal" style={{"--i": 1}}>Developer</strong> <br />
+        <span className="reveal" style={{"--i": 2}}>
           Menciptakan Website Yang Inovatif, Fungsional, dan <br />
           User-Friendly untuk Solusi Digital.
-        </p>
+        </span>
         <div className="home-buttons1 reveal" style={{"--i": 3}}>
           <div className="home-btn1">
             <button onClick={() => scrollToSection("project")}>Projects</button>
@@ -38,7 +37,6 @@ function Homecom() {
             </a>
           </div>
         </div>
-      </div>
       </div>
       <div className="right-block">
         <img className="hero-image" src="/Coding.gif" alt="Coding Animation" />

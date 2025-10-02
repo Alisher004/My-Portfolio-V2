@@ -42,7 +42,6 @@ function Header() {
             <div className="bar"></div>
             <div className="bar"></div>
           </div>
-
           <div className={`info-content ${menuOpen ? "show" : ""}`}>
             <nav onClick={() => scrollToSection("about")}>about</nav>
             <nav onClick={() => scrollToSection("project")}>projects</nav>

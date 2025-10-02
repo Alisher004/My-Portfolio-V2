@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Project.css";
 import { projects, hiddenProjects } from "../../data/Projects"; 
-import { Link } from "react-router-dom";
 
 function Projects() {
   const [showMore, setShowMore] = useState(false);
@@ -31,7 +30,7 @@ function Projects() {
           {projects.map((project, idx) => (
             <div
               key={project.id}
-              className={`project-card ${idx % 2 === 0 ? 'slide-in-left' : 'slide-in-right'}`}
+              className={`project-card ${idx % 3 === 0 ? 'slide-in-left' : idx % 3 === 1 ? 'slide-in-right' : 'slide-in-left'}`}
               style={{"--d": `${idx * 120}ms`}}
             >
               <div className="project-media">
@@ -53,9 +52,6 @@ function Projects() {
                 >
                   View Project
                 </a>
-                <Link to={`/projects/${project.id}`} className="button secondary">
-                  Details
-                </Link>
               </div>
             </div>
           ))}
@@ -66,7 +62,7 @@ function Projects() {
             {hiddenProjects.map((project, idx) => (
               <div
                 key={project.id}
-                className={`project-card ${(projects.length + idx) % 2 === 0 ? 'slide-in-left' : 'slide-in-right'}`}
+                className={`project-card ${(projects.length + idx) % 3 === 0 ? 'slide-in-left' : (projects.length + idx) % 3 === 1 ? 'slide-in-right' : 'slide-in-left'}`}
                 style={{"--d": `${(projects.length + idx) * 120}ms`}}
               >
                 <div className="project-media">
@@ -88,9 +84,6 @@ function Projects() {
                   >
                     View Project
                   </a>
-                  <Link to={`/projects/${project.id}`} className="button secondary">
-                    Details
-                  </Link>
                 </div>
               </div>
             ))}

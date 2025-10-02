@@ -97,21 +97,21 @@ const ContactForm = () => {
           <div className="contact-info">
             <div className="info-item">
               <FaEnvelope className="info-icon" />
-              <div className="info-content">
+              <div className="info-content2">
                 <h4>Email</h4>
-                <p>alisermanasov00@gmail.com</p>
+                <p>email@gmail.com</p>
               </div>
             </div>
             <div className="info-item">
               <FaPhone className="info-icon" />
-              <div className="info-content">
+              <div className="info-content2">
                 <h4>Phone</h4>
                 <p>+996 (XXX) XXX-XXX</p>
               </div>
             </div>
             <div className="info-item">
               <FaMapMarkerAlt className="info-icon" />
-              <div className="info-content">
+              <div className="info-content2">
                 <h4>Location</h4>
                 <p>Bishkek, Kyrgyzstan</p>
               </div>
