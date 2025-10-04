@@ -39,16 +39,23 @@ function Header() {
   }, []);
 
   const scrollToSection = useCallback((sectionId) => {
+    console.log('Trying to scroll to:', sectionId);
     const section = document.getElementById(sectionId);
+    console.log('Found section:', section);
+    
     if (section) {
-      const headerHeight = 80; // Account for fixed header
+      const headerHeight = 80;
       const targetPosition = section.offsetTop - headerHeight;
       
+      console.log('Scrolling to position:', targetPosition);
+      
       window.scrollTo({
-        top: targetPosition,
+        top: Math.max(0, targetPosition),
         behavior: "smooth"
       });
       setMenuOpen(false);
+    } else {
+      console.log('Section not found!');
     }
   }, []);
 
@@ -68,11 +75,11 @@ function Header() {
             <div className="bar"></div>
           </div>
           <div className={`info-content ${menuOpen ? "show" : ""}`}>
-            <nav onClick={() => scrollToSection("about")}>about</nav>
-            <nav onClick={() => scrollToSection("project")}>projects</nav>
-            <nav onClick={() => scrollToSection("skills")}>skills</nav>
-            <nav onClick={() => scrollToSection("resume")}>resume</nav>
-            <nav onClick={() => scrollToSection("contact")}>contact</nav>
+            <nav onClick={() => scrollToSection("about")} style={{ cursor: 'pointer' }}>about</nav>
+            <nav onClick={() => scrollToSection("project")} style={{ cursor: 'pointer' }}>projects</nav>
+            <nav onClick={() => scrollToSection("skills")} style={{ cursor: 'pointer' }}>skills</nav>
+            <nav onClick={() => scrollToSection("resume")} style={{ cursor: 'pointer' }}>resume</nav>
+            <nav onClick={() => scrollToSection("contact")} style={{ cursor: 'pointer' }}>contact</nav>
           </div>
         </div>
       </div>
