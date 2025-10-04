@@ -6,13 +6,6 @@ function Modal({ onClose }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Force hardware acceleration on iOS
-    const modal = document.querySelector('.modal');
-    if (modal) {
-      modal.style.webkitTransform = 'translateZ(0)';
-      modal.style.transform = 'translateZ(0)';
-    }
-
     const timer = setTimeout(() => {
       setIsVisible(false);
     }, 3000);
@@ -21,31 +14,15 @@ function Modal({ onClose }) {
   }, []);
 
   useEffect(() => {
-    if (isVisible) return;
-    const outTimer = setTimeout(() => {
-      if (typeof onClose === "function") {
-        onClose();
-      }
-    }, 500); // match .modal-out duration
-    return () => clearTimeout(outTimer);
+    if (!isVisible) {
+      const outTimer = setTimeout(() => {
+        if (typeof onClose === "function") {
+          onClose();
+        }
+      }, 500);
+      return () => clearTimeout(outTimer);
+    }
   }, [isVisible, onClose]);
-
-  // Prevent iOS Safari from hiding the modal due to viewport issues
-  useEffect(() => {
-    const handleResize = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, []);
 
   return (
     <div className={`modal ${isVisible ? "modal-in" : "modal-out"}`}>
