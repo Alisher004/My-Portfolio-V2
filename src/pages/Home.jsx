@@ -14,18 +14,10 @@ function Home() {
     <div>
       <Homecom />
         <About id="about"/>
-      <div id="project">
-        <Projects />
-      </div>
-      <div id="skills">
-        <Skills />
-      </div>
-      <div id="resume">
-        <Resume />
-      </div>
-      <div id="contact">
-        <ContactForm />
-      </div>
+        <Projects id="project"/>
+        <Skills id="skills"/>
+        <Resume id="resume"/>
+        <ContactForm id="contact"/>
     </div>
   );
 }
