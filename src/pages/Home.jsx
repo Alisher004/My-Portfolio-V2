@@ -9,15 +9,28 @@ import Resume from "../components/res";
 
 function Home() {
   return (
+function Home() {
+  return (
     <div>
       <Homecom />
-      <About />
-      <Projects />
-      <Skills />
-      <PictureModal />
-      <Resume />
-      <ContactForm />
+      <div id="about">
+        <About />
+      </div>
+      <div id="project">
+        <Projects />
+      </div>
+      <div id="skills">
+        <Skills />
+      </div>
+      <div id="resume">
+        <Resume />
+      </div>
+      <div id="contact">
+        <ContactForm />
+      </div>
     </div>
+  );
+}
   );
 }
 
