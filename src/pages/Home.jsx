@@ -13,9 +13,7 @@ function Home() {
   return (
     <div>
       <Homecom />
-      <div id="about">
-        <About />
-      </div>
+        <About id="about"/>
       <div id="project">
         <Projects />
       </div>
