@@ -5,6 +5,7 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const ticking = useRef(false);
+  const headerRef = useRef(null);
 
   // Throttled scroll handler for better performance
   const handleScroll = useCallback(() => {
@@ -21,65 +22,125 @@ function Header() {
   }, [scrolled]);
 
   React.useEffect(() => {
+    const options = { passive: true };
     // Initial check
     handleScroll();
-    
+
     // Add scroll listener with passive flag for better performance
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, options);
+
+    return () => window.removeEventListener("scroll", handleScroll, options);
   }, [handleScroll]);
 
   const scrollToTop = useCallback(() => {
-    window.scrollTo({ 
-      top: 0, 
-      behavior: "smooth" 
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
     setMenuOpen(false);
-  }, []);
+  }, [setMenuOpen]);
 
-  const scrollToSection = useCallback((sectionId) => {
-    console.log('Trying to scroll to:', sectionId);
-    const section = document.getElementById(sectionId);
-    console.log('Found section:', section);
-    
-    if (section) {
-      const headerHeight = 80;
-      const targetPosition = section.offsetTop - headerHeight;
-      
-      console.log('Scrolling to position:', targetPosition);
-      
+  const scrollToSection = useCallback(
+    (sectionId) => {
+      const section = document.getElementById(sectionId);
+
+      if (!section) {
+        // Helpful console warning for debugging
+        console.warn(`Header: section with id="${sectionId}" not found.`);
+        return;
+      }
+
+      const headerHeight = headerRef.current?.offsetHeight ?? 80;
+      const targetPosition =
+        section.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
       window.scrollTo({
         top: Math.max(0, targetPosition),
-        behavior: "smooth"
+        behavior: "smooth",
       });
       setMenuOpen(false);
-    } else {
-      console.log('Section not found!');
-    }
-  }, []);
+    },
+    [setMenuOpen]
+  );
 
   const toggleMenu = useCallback(() => {
-    setMenuOpen(prev => !prev);
+    setMenuOpen((prev) => !prev);
   }, []);
 
+  const handleNavKeyDown = (e, sectionId) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      scrollToSection(sectionId);
+    }
+  };
+
   return (
-    <header className={`content ${scrolled ? "scrolled" : ""}`}>
+    <header ref={headerRef} className={`content ${scrolled ? "scrolled" : ""}`}>
       <div className="container">
         <div className="header">
-          <h1 onClick={scrollToTop} className="title">ALISHER</h1>
+          <h1 onClick={scrollToTop} className="title" style={{ cursor: "pointer" }}>
+            ALISHER
+          </h1>
 
-          <div className={`menu-icon ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+          <div
+            className={`menu-icon ${menuOpen ? "open" : ""}`}
+            onClick={toggleMenu}
+            role="button"
+            aria-expanded={menuOpen}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleMenu();
+              }
+            }}
+          >
             <div className="bar"></div>
             <div className="bar"></div>
             <div className="bar"></div>
           </div>
+
           <div className={`info-content ${menuOpen ? "show" : ""}`}>
-            <nav onClick={() => scrollToSection("about")} style={{ cursor: 'pointer' }}>about</nav>
-            <nav onClick={() => scrollToSection("project")} style={{ cursor: 'pointer' }}>projects</nav>
-            <nav onClick={() => scrollToSection("skills")} style={{ cursor: 'pointer' }}>skills</nav>
-            <nav onClick={() => scrollToSection("resume")} style={{ cursor: 'pointer' }}>resume</nav>
-            <nav onClick={() => scrollToSection("contact")} style={{ cursor: 'pointer' }}>contact</nav>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollToSection("about")}
+              onKeyDown={(e) => handleNavKeyDown(e, "about")}
+            >
+              about
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollToSection("project")}
+              onKeyDown={(e) => handleNavKeyDown(e, "project")}
+            >
+              projects
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollToSection("skills")}
+              onKeyDown={(e) => handleNavKeyDown(e, "skills")}
+            >
+              skills
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollToSection("resume")}
+              onKeyDown={(e) => handleNavKeyDown(e, "resume")}
+            >
+              resume
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollToSection("contact")}
+              onKeyDown={(e) => handleNavKeyDown(e, "contact")}
+            >
+              contact
+            </div>
           </div>
         </div>
       </div>
