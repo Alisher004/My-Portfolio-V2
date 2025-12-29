@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import "./Modal.css";
 import { FaCode, FaUser, FaCoffee } from "react-icons/fa";
 
@@ -24,7 +25,7 @@ function Modal({ onClose }) {
     }
   }, [isVisible, onClose]);
 
-  return (
+  const modalContent = (
     <div className={`modal ${isVisible ? "modal-in" : "modal-out"}`}>
       <div className="modal-content">
         <div className="icons">
@@ -42,6 +43,10 @@ function Modal({ onClose }) {
       </div>
     </div>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 }
 
 export default Modal;
