@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -104,8 +106,6 @@ function Header() {
             <div
               role="button"
               tabIndex={0}
-              onClick={() => scrollToSection("about")}
-              onKeyDown={(e) => handleNavKeyDown(e, "about")}
             >
               about
             </div>
@@ -125,14 +125,13 @@ function Header() {
             >
               skills
             </div>
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollToSection("resume")}
-              onKeyDown={(e) => handleNavKeyDown(e, "resume")}
+            <NavLink
+              to="/resume"
+              className={({ isActive }) => (isActive ? "nav-active" : undefined)}
+              onClick={() => setMenuOpen(false)}
             >
               resume
-            </div>
+            </NavLink>
             <div
               role="button"
               tabIndex={0}

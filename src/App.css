@@ -21,9 +21,6 @@ body {
   width: 100%;
   max-width: 100vw;
   position: relative;
-  /* Hardware acceleration for smooth scrolling */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
   will-change: scroll-position;
 }
 
@@ -33,9 +30,7 @@ body {
   margin: 0 auto;
   padding: 0 10px;
   box-sizing: border-box;
-  /* Hardware acceleration */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  /* removed unnecessary hardware acceleration here to avoid stacking-context issues */
 }
 
 /* Prevent any element from causing horizontal overflow */
@@ -53,9 +48,7 @@ img, video, iframe {
   max-width: 100%;
   height: auto;
   display: block;
-  /* Hardware acceleration for media */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  /* media display - no forced translateZ */
 }
 
 /* Smooth transitions for all elements */
