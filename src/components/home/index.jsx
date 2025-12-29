@@ -52,10 +52,6 @@ function Homecom() {
           src="/Coding.gif" 
           alt="Coding Animation"
           loading="eager"
-          style={{
-            transform: 'translateZ(0)',
-            WebkitTransform: 'translateZ(0)'
-          }}
         />
       </div>
     </div>

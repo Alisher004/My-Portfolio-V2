@@ -41,9 +41,6 @@ body {
   min-height: 100vh;
   position: relative;
   -webkit-overflow-scrolling: touch;
-  /* Hardware acceleration for smooth scrolling */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
   will-change: scroll-position;
 }
 
@@ -54,8 +51,6 @@ body {
   min-height: 100vh;
   position: relative;
   /* Hardware acceleration */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 /* Prevent horizontal scroll on all elements */
@@ -98,8 +93,6 @@ html, body, #root {
   position: relative;
   z-index: 1;
   /* Hardware acceleration for all major sections */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 /* iOS Safari specific fixes */

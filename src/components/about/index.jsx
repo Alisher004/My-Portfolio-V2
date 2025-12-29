@@ -94,8 +94,6 @@ function About() {
             alt="photo"
             loading="lazy"
             style={{
-              transform: 'translateZ(0)',
-              WebkitTransform: 'translateZ(0)',
               willChange: 'transform'
             }}
           />
