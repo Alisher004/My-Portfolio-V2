@@ -5,6 +5,7 @@ import { router } from './router'
 function App() {
   return (
     <>
+    {/* router */}
      <RouterProvider router={router}/>
     </>
   )
