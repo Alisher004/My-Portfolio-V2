@@ -1,7 +1,5 @@
-import React, { useState, useCallback, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import "./Header.css";
-import { Link } from "react-router-dom";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,138 +7,61 @@ function Header() {
   const ticking = useRef(false);
   const headerRef = useRef(null);
 
-  // Throttled scroll handler for better performance
   const handleScroll = useCallback(() => {
     if (!ticking.current) {
       requestAnimationFrame(() => {
-        const shouldBeScrolled = window.scrollY > 8;
-        if (shouldBeScrolled !== scrolled) {
-          setScrolled(shouldBeScrolled);
-        }
+        setScrolled(window.scrollY > 8);
         ticking.current = false;
       });
       ticking.current = true;
     }
-  }, [scrolled]);
+  }, []);
 
-  React.useEffect(() => {
-    const options = { passive: true };
-    // Initial check
-    handleScroll();
-
-    // Add scroll listener with passive flag for better performance
-    window.addEventListener("scroll", handleScroll, options);
-
-    return () => window.removeEventListener("scroll", handleScroll, options);
+  useEffect(() => {
+    handleScroll(); // Initial check
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   const scrollToTop = useCallback(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setMenuOpen(false);
-  }, [setMenuOpen]);
-
-  const scrollToSection = useCallback(
-    (sectionId) => {
-      const section = document.getElementById(sectionId);
-
-      if (!section) {
-        // Helpful console warning for debugging
-        console.warn(`Header: section with id="${sectionId}" not found.`);
-        return;
-      }
-
-      const headerHeight = headerRef.current?.offsetHeight ?? 80;
-      const targetPosition =
-        section.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: "smooth",
-      });
-      setMenuOpen(false);
-    },
-    [setMenuOpen]
-  );
-
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => !prev);
   }, []);
 
-  const handleNavKeyDown = (e, sectionId) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      scrollToSection(sectionId);
-    }
-  };
+  const scrollToSection = useCallback((id) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const headerHeight = headerRef.current?.offsetHeight || 80;
+    const top = section.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+    window.scrollTo({ top, behavior: "smooth" });
+    setMenuOpen(false);
+  }, []);
+
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
   return (
-    <header ref={headerRef} className={`content ${scrolled ? "scrolled" : ""}`}>
-      <div className="container">
-        <div className="header">
-          <h1 onClick={scrollToTop} className="title" style={{ cursor: "pointer" }}>
-            ALISHER
-          </h1>
+    <header ref={headerRef} className={`content3 ${scrolled ? "scrolled" : ""}`}>
+      <div className="container header">
+        <h1 className="title" onClick={scrollToTop}>ALISHER</h1>
 
-          <div
-            className={`menu-icon ${menuOpen ? "open" : ""}`}
-            onClick={toggleMenu}
-            role="button"
-            aria-expanded={menuOpen}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleMenu();
-              }
-            }}
-          >
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-          </div>
+        <div
+          className={`menu-icon ${menuOpen ? "open" : ""}`}
+          onClick={toggleMenu}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") toggleMenu(); }}
+        >
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </div>
 
-          <div className={`info-content ${menuOpen ? "show" : ""}`}>
-            <div
-              role="button"
-              tabIndex={0}
-            >
-              about
-            </div>
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollToSection("project")}
-              onKeyDown={(e) => handleNavKeyDown(e, "project")}
-            >
-              projects
-            </div>
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollToSection("skills")}
-              onKeyDown={(e) => handleNavKeyDown(e, "skills")}
-            >
-              skills
-            </div>
-            <NavLink
-              to="/resume"
-              className={({ isActive }) => (isActive ? "nav-active" : undefined)}
-              onClick={() => setMenuOpen(false)}
-            >
-              resume
-            </NavLink>
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollToSection("contact")}
-              onKeyDown={(e) => handleNavKeyDown(e, "contact")}
-            >
-              contact
-            </div>
-          </div>
+        <div className={`info-content ${menuOpen ? "show" : ""}`}>
+          <a href="#about" onClick={() => scrollToSection("about")}>about</a>
+          <a href="#project" onClick={() => scrollToSection("project")}>projects</a>
+          <a href="#resume" onClick={() => scrollToSection("resume")}>resume</a>
+          <a href="#skills" onClick={() => scrollToSection("skills")}>skills</a>
+          <a href="#contact" onClick={() => scrollToSection("contact")}>contact</a>
         </div>
       </div>
     </header>

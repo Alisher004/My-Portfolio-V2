@@ -3,7 +3,7 @@ import './Resume.css'
 
 const Resume = () => {
 	return (
-		<div className="resume-page">
+		<div className="resume-page" id='resume'>
 			<div className="resume-actions">
 				<a className="resume-download" href="/резюме.pdf" download>Скачать резюме (PDF)</a>
 			</div>

@@ -8,14 +8,14 @@ import Resume from "../components/res";
 
 function Home() {
   return (
-    <div>
+    <>
       <Homecom />
       <About id="about"/>
       <Projects id="project"/>
       <Skills id="skills"/>
       <Resume id="resume"/>
       <ContactForm id="contact"/>
-    </div>
+      </>
   );
 }
 
