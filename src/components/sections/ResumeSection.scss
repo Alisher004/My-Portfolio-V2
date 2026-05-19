@@ -1,0 +1,50 @@
+.resume-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 0 16px;
+  margin-bottom: 0;
+}
+
+.resume-actions {
+  width: 100%;
+  max-width: 210mm;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10px;
+}
+
+.resume-download {
+  background: #6b21a8;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.resume-wrapper {
+  width: 210mm;
+  max-width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  background: #fff;
+}
+
+.resume-iframe {
+  width: 100%;
+  height: min(297mm, 70vh);
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .resume-iframe {
+    height: 60vh;
+  }
+
+  .resume-wrapper {
+    width: 100%;
+    padding: 0 10px;
+  }
+}

@@ -1,12 +1,30 @@
-# React + Vite
+# My Portfolio V2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Портфолио на **Vue 3**, **SCSS**, проекты и админ из **MongoDB**.
 
-Currently, two official plugins are available:
+## Быстрый старт
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+cp .env.example .env
+# заполните MONGODB_URI, JWT_SECRET, ADMIN_USERNAME, ADMIN_PASSWORD
 
-## Expanding the ESLint configuration
+npm run seed          # проекты в БД
+npm run seed:admin    # логин/пароль админа
+npm run dev:all       # API + сайт
+```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Сайт: http://localhost:5173  
+- Админ: http://localhost:5173/admin (логин + пароль из `.env`)
+
+**Подробная инструкция с нуля:** [docs/MONGODB.md](docs/MONGODB.md)
+
+## Скрипты
+
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Фронтенд |
+| `npm run server` | API |
+| `npm run dev:all` | API + фронт |
+| `npm run seed` | Проекты в MongoDB |
+| `npm run seed:admin` | Создать/обновить админа |
