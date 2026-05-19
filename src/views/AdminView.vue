@@ -8,7 +8,7 @@
         <section class="admin-card admin-login">
           <p class="admin-badge">Portfolio Admin</p>
           <h1>Вход в панель</h1>
-          <p class="admin-hint">Учётная запись хранится в MongoDB</p>
+          <p class="admin-hint">Логин и пароль задаются в .env (ADMIN_USERNAME / ADMIN_PASSWORD)</p>
 
           <form class="admin-form" @submit.prevent="handleLogin">
             <label class="field">
@@ -107,7 +107,7 @@
             <div v-if="loadingList" class="empty-state">Загрузка…</div>
 
             <div v-else-if="list.length" class="admin-grid">
-              <article v-for="item in list" :key="item._id" class="admin-project-card">
+              <article v-for="item in list" :key="projectId(item)" class="admin-project-card">
                 <div class="card-media">
                   <img :src="item.img" :alt="item.title" loading="lazy" />
                   <span class="order-badge">#{{ item.order ?? 0 }}</span>
@@ -123,7 +123,7 @@
                   <a :href="item.link" target="_blank" rel="noopener noreferrer" class="btn-ghost btn-sm">
                     Открыть
                   </a>
-                  <button type="button" class="btn-danger btn-sm" @click="removeProject(item._id)">
+                  <button type="button" class="btn-danger btn-sm" @click="removeProject(projectId(item))">
                     Удалить
                   </button>
                 </div>
@@ -174,6 +174,10 @@ onMounted(async () => {
     if (token.value) await loadAll()
   }
 })
+
+function projectId(item) {
+  return item.id ?? item._id
+}
 
 function techTags(tech) {
   return tech.split(',').map((t) => t.trim()).filter(Boolean)

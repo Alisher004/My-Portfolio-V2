@@ -1,4 +1,4 @@
-/** Резервные данные, если API / MongoDB недоступны */
+/** Резервные данные, если API / MockAPI недоступны */
 export const fallbackProjects = [
   {
     id: 1,

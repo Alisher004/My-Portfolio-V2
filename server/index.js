@@ -1,58 +1,62 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
-import { Project } from './models/Project.js'
-import { User } from './models/User.js'
 import { requireAuth, signToken } from './middleware/auth.js'
+import {
+  fetchProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+} from './mockapi.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
 
+const ADMIN_USERNAME = (process.env.ADMIN_USERNAME || 'admin').trim().toLowerCase()
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
+
 app.use(cors())
 app.use(express.json())
 
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, db: mongoose.connection.readyState === 1 })
-})
-
-app.post('/api/auth/login', async (req, res) => {
+app.get('/api/health', async (_req, res) => {
   try {
-    const { username, password } = req.body
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Введите логин и пароль' })
-    }
-
-    const user = await User.findOne({ username: username.trim().toLowerCase() })
-    if (!user) {
-      return res.status(401).json({ error: 'Неверный логин или пароль' })
-    }
-
-    const valid = await bcrypt.compare(password, user.passwordHash)
-    if (!valid) {
-      return res.status(401).json({ error: 'Неверный логин или пароль' })
-    }
-
-    const token = signToken(user)
-    res.json({
-      token,
-      user: { username: user.username, role: user.role },
-    })
+    await fetchProjects()
+    res.json({ ok: true, mockapi: true })
   } catch {
-    res.status(500).json({ error: 'Ошибка входа' })
+    res.json({ ok: false, mockapi: false })
   }
 })
 
-app.get('/api/auth/me', requireAuth, async (req, res) => {
-  const user = await User.findById(req.user.sub).select('username role')
-  if (!user) return res.status(401).json({ error: 'Пользователь не найден' })
-  res.json({ user: { username: user.username, role: user.role } })
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Введите логин и пароль' })
+  }
+  if (!ADMIN_PASSWORD) {
+    return res.status(500).json({ error: 'ADMIN_PASSWORD не задан в .env' })
+  }
+
+  const login = username.trim().toLowerCase()
+  if (login !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Неверный логин или пароль' })
+  }
+
+  const token = signToken({ username: ADMIN_USERNAME, role: 'admin' })
+  res.json({
+    token,
+    user: { username: ADMIN_USERNAME, role: 'admin' },
+  })
+})
+
+app.get('/api/auth/me', requireAuth, (req, res) => {
+  res.json({
+    user: { username: req.user.username, role: req.user.role },
+  })
 })
 
 app.get('/api/projects', async (_req, res) => {
   try {
-    const projects = await Project.find({ visible: true }).sort({ order: 1, createdAt: -1 })
+    const projects = await fetchProjects({ visibleOnly: true })
     res.json(projects)
   } catch {
     res.status(500).json({ error: 'Не удалось загрузить проекты' })
@@ -61,7 +65,7 @@ app.get('/api/projects', async (_req, res) => {
 
 app.get('/api/projects/all', requireAuth, async (_req, res) => {
   try {
-    const projects = await Project.find().sort({ order: 1, createdAt: -1 })
+    const projects = await fetchProjects()
     res.json(projects)
   } catch {
     res.status(500).json({ error: 'Не удалось загрузить проекты' })
@@ -70,7 +74,7 @@ app.get('/api/projects/all', requireAuth, async (_req, res) => {
 
 app.post('/api/projects', requireAuth, async (req, res) => {
   try {
-    const project = await Project.create(req.body)
+    const project = await createProject(req.body)
     res.status(201).json(project)
   } catch (err) {
     res.status(400).json({ error: err.message || 'Ошибка создания' })
@@ -79,11 +83,7 @@ app.post('/api/projects', requireAuth, async (req, res) => {
 
 app.put('/api/projects/:id', requireAuth, async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    })
-    if (!project) return res.status(404).json({ error: 'Проект не найден' })
+    const project = await updateProject(req.params.id, req.body)
     res.json(project)
   } catch (err) {
     res.status(400).json({ error: err.message || 'Ошибка обновления' })
@@ -92,30 +92,19 @@ app.put('/api/projects/:id', requireAuth, async (req, res) => {
 
 app.delete('/api/projects/:id', requireAuth, async (req, res) => {
   try {
-    const project = await Project.findByIdAndDelete(req.params.id)
-    if (!project) return res.status(404).json({ error: 'Проект не найден' })
+    await deleteProject(req.params.id)
     res.json({ ok: true })
   } catch {
     res.status(500).json({ error: 'Ошибка удаления' })
   }
 })
 
-async function start() {
-  const uri = process.env.MONGODB_URI
-  if (!uri) {
-    console.error('MONGODB_URI не задан. Скопируйте .env.example в .env')
-    process.exit(1)
-  }
-
-  await mongoose.connect(uri)
-  console.log('MongoDB подключена')
-
-  app.listen(PORT, () => {
-    console.log(`API: http://localhost:${PORT}`)
-  })
+if (!process.env.MOCKAPI_BASE_URL) {
+  console.error('MOCKAPI_BASE_URL не задан. Скопируйте .env.example в .env')
+  process.exit(1)
 }
 
-start().catch((err) => {
-  console.error(err)
-  process.exit(1)
+app.listen(PORT, () => {
+  console.log(`API: http://localhost:${PORT}`)
+  console.log(`MockAPI: ${process.env.MOCKAPI_BASE_URL}`)
 })
