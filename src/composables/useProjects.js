@@ -1,34 +1,39 @@
 import { ref, onMounted } from 'vue'
-import { fallbackProjects } from '../data/fallbackProjects'
 
-const apiBase = import.meta.env.VITE_API_URL ?? ''
+const mockApiUrl = import.meta.env.VITE_MOCKAPI_URL ?? ''
 
 export function useProjects() {
   const projects = ref([])
   const loading = ref(true)
   const error = ref(null)
-  const fromApi = ref(false)
 
   async function load() {
     loading.value = true
     error.value = null
 
-    try {
-      const res = await fetch(`${apiBase}/api/projects`)
-      if (!res.ok) throw new Error('API error')
-
-      const data = await res.json()
-      if (Array.isArray(data) && data.length > 0) {
-        projects.value = data.map(normalizeProject)
-        fromApi.value = true
-        return
-      }
-    } catch (e) {
-      error.value = 'Используются локальные данные (API недоступен)'
+    if (!mockApiUrl) {
+      error.value = 'VITE_MOCKAPI_URL не задан'
+      projects.value = []
+      return
     }
 
-    projects.value = fallbackProjects.map(normalizeProject)
-    fromApi.value = false
+    try {
+      const res = await fetch(mockApiUrl)
+      if (!res.ok) throw new Error('MockAPI error')
+
+      const data = await res.json()
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error('empty')
+      }
+
+      projects.value = data
+        .filter((p) => p.visible !== false)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .map(normalizeProject)
+    } catch {
+      error.value = 'Не удалось загрузить проекты из MockAPI'
+      projects.value = []
+    }
   }
 
   onMounted(async () => {
@@ -36,7 +41,7 @@ export function useProjects() {
     loading.value = false
   })
 
-  return { projects, loading, error, fromApi, reload: load }
+  return { projects, loading, error, reload: load }
 }
 
 function normalizeProject(p) {

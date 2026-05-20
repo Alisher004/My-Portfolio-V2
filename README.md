@@ -18,7 +18,8 @@ npm run dev           # API + сайт (бир терминал)
 - Сайт: http://localhost:5173  
 - Админ: http://localhost:5173/admin (логин + пароль из `.env`)
 
-**Подробная инструкция:** [docs/MOCKAPI.md](docs/MOCKAPI.md)
+**Подробная инструкция:** [docs/MOCKAPI.md](docs/MOCKAPI.md)  
+**Деплой на Vercel:** [docs/VERCEL.md](docs/VERCEL.md) — обязательно задайте env-переменные в панели Vercel
 
 ## Скрипты
 

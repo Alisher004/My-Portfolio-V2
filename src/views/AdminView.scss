@@ -141,6 +141,13 @@
 .admin-form-card {
   position: sticky;
   top: 100px;
+
+  &.is-editing {
+    border-color: rgba(168, 85, 247, 0.45);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(168, 85, 247, 0.25);
+  }
 }
 
 /* Form */
@@ -166,6 +173,37 @@
 
 .field-inline input {
   max-width: 100px;
+}
+
+.field-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    accent-color: $color-primary;
+    cursor: pointer;
+  }
+
+  span {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    color: rgba(226, 232, 240, 0.9);
+  }
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .btn-primary {
+    flex: 1;
+    min-width: 140px;
+  }
 }
 
 .admin-form input,
@@ -349,6 +387,23 @@
   }
 }
 
+.admin-project-card.is-active {
+  border-color: rgba(168, 85, 247, 0.55);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.3);
+}
+
+.hidden-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.85);
+  color: #fff;
+}
+
 .order-badge {
   position: absolute;
   top: 10px;
@@ -405,13 +460,15 @@
 
 .card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 0 14px 14px;
   margin-top: auto;
 
   .btn-ghost,
   .btn-danger {
-    flex: 1;
+    flex: 1 1 calc(50% - 4px);
+    min-width: 72px;
     text-align: center;
     justify-content: center;
   }

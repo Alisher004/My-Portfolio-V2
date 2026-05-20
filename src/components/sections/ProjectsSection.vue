@@ -4,7 +4,7 @@
       <h2>Проекты</h2>
 
       <p v-if="loading" class="projects-status">Загрузка проектов…</p>
-      <p v-else-if="!fromApi && error" class="projects-status">{{ error }}</p>
+      <p v-else-if="error" class="projects-status">{{ error }}</p>
 
       <div v-else class="projects-grid">
         <article
@@ -51,7 +51,7 @@ import { useSlideIn } from '../../composables/useSlideIn'
 import './ProjectsSection.scss'
 
 const sectionRef = ref(null)
-const { projects, loading, error, fromApi } = useProjects()
+const { projects, loading, error } = useProjects()
 
 useSlideIn(sectionRef, { removeOnLeave: true, watchSource: projects })
 

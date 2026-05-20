@@ -1,15 +1,17 @@
-const BASE = process.env.MOCKAPI_BASE_URL?.replace(/\/$/, '')
 const RESOURCE = process.env.MOCKAPI_RESOURCE || 'porfolio'
 
-function endpoint(id) {
-  assertBase()
-  return id ? `${BASE}/${RESOURCE}/${id}` : `${BASE}/${RESOURCE}`
+function resolveBase() {
+  let base = (process.env.MOCKAPI_BASE_URL || '').replace(/\/$/, '')
+  if (base.endsWith(`/${RESOURCE}`)) {
+    base = base.slice(0, -(`/${RESOURCE}`).length)
+  }
+  return base
 }
 
-function assertBase() {
-  if (!BASE) {
-    throw new Error('MOCKAPI_BASE_URL не задан в .env')
-  }
+function endpoint(id) {
+  const base = resolveBase()
+  if (!base) throw new Error('MOCKAPI_BASE_URL не задан в .env')
+  return id ? `${base}/${RESOURCE}/${id}` : `${base}/${RESOURCE}`
 }
 
 function sortProjects(projects) {
@@ -35,7 +37,7 @@ export async function createProject(body) {
     body: JSON.stringify(body),
   })
   const data = await res.json()
-  if (!res.ok) throw new Error(data.message || 'Ошибка создания')
+  if (!res.ok) throw new Error(data.message || data.error || 'Ошибка создания')
   return data
 }
 
@@ -46,7 +48,7 @@ export async function updateProject(id, body) {
     body: JSON.stringify(body),
   })
   const data = await res.json()
-  if (!res.ok) throw new Error(data.message || 'Ошибка обновления')
+  if (!res.ok) throw new Error(data.message || data.error || 'Ошибка обновления')
   return data
 }
 

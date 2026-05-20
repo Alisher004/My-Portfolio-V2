@@ -8,7 +8,7 @@
         <section class="admin-card admin-login">
           <p class="admin-badge">Portfolio Admin</p>
           <h1>Вход в панель</h1>
-          <p class="admin-hint">Логин и пароль задаются в .env (ADMIN_USERNAME / ADMIN_PASSWORD)</p>
+          <p class="admin-hint">Логин и пароль из .env (VITE_ADMIN_USERNAME / VITE_ADMIN_PASSWORD)</p>
 
           <form class="admin-form" @submit.prevent="handleLogin">
             <label class="field">
@@ -62,9 +62,9 @@
         <p v-if="message" :class="['admin-toast', messageType, 'toast-global']">{{ message }}</p>
 
         <div class="admin-layout">
-          <section class="admin-card admin-form-card">
-            <h2>Новый проект</h2>
-            <form class="admin-form" @submit.prevent="addProject">
+          <section class="admin-card admin-form-card" :class="{ 'is-editing': editingId }">
+            <h2>{{ editingId ? 'Редактирование' : 'Новый проект' }}</h2>
+            <form class="admin-form" @submit.prevent="submitForm">
               <label class="field">
                 <span>Название</span>
                 <input v-model="form.title" placeholder="Интернет-магазин" required />
@@ -92,9 +92,24 @@
                 <span>Порядок</span>
                 <input v-model.number="form.order" type="number" min="0" />
               </label>
-              <button type="submit" class="btn-primary" :disabled="saving">
-                {{ saving ? 'Сохранение…' : '+ Добавить проект' }}
-              </button>
+              <label class="field field-check">
+                <input v-model="form.visible" type="checkbox" />
+                <span>Показывать на сайте</span>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary" :disabled="saving">
+                  {{ saving ? 'Сохранение…' : editingId ? 'Сохранить' : '+ Добавить проект' }}
+                </button>
+                <button
+                  v-if="editingId"
+                  type="button"
+                  class="btn-ghost"
+                  :disabled="saving"
+                  @click="cancelEdit"
+                >
+                  Отмена
+                </button>
+              </div>
             </form>
           </section>
 
@@ -107,10 +122,16 @@
             <div v-if="loadingList" class="empty-state">Загрузка…</div>
 
             <div v-else-if="list.length" class="admin-grid">
-              <article v-for="item in list" :key="projectId(item)" class="admin-project-card">
+              <article
+                v-for="item in list"
+                :key="projectId(item)"
+                class="admin-project-card"
+                :class="{ 'is-active': editingId === projectId(item) }"
+              >
                 <div class="card-media">
                   <img :src="item.img" :alt="item.title" loading="lazy" />
                   <span class="order-badge">#{{ item.order ?? 0 }}</span>
+                  <span v-if="item.visible === false" class="hidden-badge">Скрыт</span>
                 </div>
                 <div class="card-body">
                   <h3>{{ item.title }}</h3>
@@ -120,6 +141,9 @@
                   </p>
                 </div>
                 <div class="card-actions">
+                  <button type="button" class="btn-ghost btn-sm" @click="startEdit(item)">
+                    Изменить
+                  </button>
                   <a :href="item.link" target="_blank" rel="noopener noreferrer" class="btn-ghost btn-sm">
                     Открыть
                   </a>
@@ -144,23 +168,26 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { token, currentUser, login, logout, fetchMe, authHeaders } from '../composables/useAuth'
+import { token, currentUser, login, logout, fetchMe } from '../composables/useAuth'
+import {
+  fetchAllProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+} from '../composables/useMockApi'
 import './AdminView.scss'
-
-const apiBase = import.meta.env.VITE_API_URL ?? ''
 
 const loginForm = ref({ username: '', password: '' })
 const loggingIn = ref(false)
 const isLoggedIn = computed(() => Boolean(token.value))
 
-const form = ref({
-  title: '',
-  desc: '',
-  tech: '',
-  link: '',
-  img: '',
-  order: 0,
-})
+const editingId = ref(null)
+
+function emptyForm() {
+  return { title: '', desc: '', tech: '', link: '', img: '', order: 0, visible: true }
+}
+
+const form = ref(emptyForm())
 
 const list = ref([])
 const saving = ref(false)
@@ -177,6 +204,18 @@ onMounted(async () => {
 
 function projectId(item) {
   return item.id ?? item._id
+}
+
+function projectPayload() {
+  return {
+    title: form.value.title.trim(),
+    desc: form.value.desc.trim(),
+    tech: form.value.tech.trim(),
+    link: form.value.link.trim(),
+    img: form.value.img.trim(),
+    order: form.value.order ?? 0,
+    visible: form.value.visible,
+  }
 }
 
 function techTags(tech) {
@@ -204,41 +243,56 @@ async function handleLogin() {
 function handleLogout() {
   logout()
   list.value = []
+  cancelEdit()
   showMsg('Вы вышли из системы', 'ok')
+}
+
+function startEdit(item) {
+  editingId.value = projectId(item)
+  form.value = {
+    title: item.title ?? '',
+    desc: item.desc ?? '',
+    tech: item.tech ?? '',
+    link: item.link ?? '',
+    img: item.img ?? '',
+    order: item.order ?? 0,
+    visible: item.visible !== false,
+  }
+}
+
+function cancelEdit() {
+  editingId.value = null
+  form.value = emptyForm()
 }
 
 async function loadAll() {
   loadingList.value = true
   try {
-    const res = await fetch(`${apiBase}/api/projects/all`, { headers: authHeaders() })
-    if (res.status === 401) {
-      logout()
-      return
-    }
-    if (!res.ok) throw new Error()
-    list.value = await res.json()
-  } catch {
+    list.value = await fetchAllProjects()
+  } catch (e) {
     list.value = []
+    showMsg(e.message || 'Не удалось загрузить', 'err')
   } finally {
     loadingList.value = false
   }
 }
 
-async function addProject() {
+async function submitForm() {
   saving.value = true
   try {
-    const res = await fetch(`${apiBase}/api/projects`, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ ...form.value, visible: true }),
-    })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'Ошибка')
-    showMsg('Проект добавлен', 'ok')
-    form.value = { title: '', desc: '', tech: '', link: '', img: '', order: 0 }
+    const payload = projectPayload()
+    if (editingId.value) {
+      await updateProject(editingId.value, payload)
+      showMsg('Изменения сохранены', 'ok')
+      cancelEdit()
+    } else {
+      await createProject(payload)
+      showMsg('Проект добавлен', 'ok')
+      form.value = emptyForm()
+    }
     await loadAll()
   } catch (e) {
-    showMsg(e.message || 'Не удалось добавить', 'err')
+    showMsg(e.message || 'Не удалось сохранить', 'err')
   } finally {
     saving.value = false
   }
@@ -247,15 +301,12 @@ async function addProject() {
 async function removeProject(id) {
   if (!confirm('Удалить этот проект?')) return
   try {
-    const res = await fetch(`${apiBase}/api/projects/${id}`, {
-      method: 'DELETE',
-      headers: authHeaders(),
-    })
-    if (!res.ok) throw new Error()
+    await deleteProject(id)
+    if (editingId.value === id) cancelEdit()
     showMsg('Проект удалён', 'ok')
     await loadAll()
-  } catch {
-    showMsg('Ошибка удаления', 'err')
+  } catch (e) {
+    showMsg(e.message || 'Ошибка удаления', 'err')
   }
 }
 
